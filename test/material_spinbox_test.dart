@@ -83,10 +83,10 @@ void main() {
   });
 
   group('icon color', () {
-    final iconColor = MaterialStateProperty.resolveWith((states) {
-      if (states.contains(MaterialState.disabled)) return Colors.yellow;
-      if (states.contains(MaterialState.error)) return Colors.red;
-      if (states.contains(MaterialState.focused)) return Colors.blue;
+    final iconColor = WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.disabled)) return Colors.yellow;
+      if (states.contains(WidgetState.error)) return Colors.red;
+      if (states.contains(WidgetState.focused)) return Colors.blue;
       return Colors.green;
     });
 
@@ -198,7 +198,7 @@ void main() {
         TestApp(
           widget: SpinBoxTheme(
             data: SpinBoxThemeData(
-              iconColor: MaterialStateProperty.all(Colors.black),
+              iconColor: WidgetStateProperty.all(Colors.black),
             ),
             child: SpinBox(iconColor: iconColor),
           ),
