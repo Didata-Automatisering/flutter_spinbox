@@ -104,6 +104,27 @@ class HorizontalSpinBoxPage extends StatelessWidget {
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  child: Text('Validation', style: caption),
+                  padding: const EdgeInsets.only(left: 16),
+                ),
+                CupertinoSpinBox(
+                  min: -10,
+                  max: 10,
+                  value: 0,
+                  validator: (text) =>
+                      (text?.isEmpty ?? true) || num.parse(text!) == 0
+                          ? 'Invalid'
+                          : null,
+                ),
+              ],
+            ),
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

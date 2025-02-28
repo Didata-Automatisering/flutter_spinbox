@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../base_spin_box.dart';
 import 'spin_button.dart';
@@ -65,6 +66,7 @@ class CupertinoSpinBox extends BaseSpinBox {
     this.textInputAction,
     this.padding = const EdgeInsets.all(6),
     this.decoration = _kDefaultRoundedBorderDecoration,
+    this.validator,
     this.keyboardAppearance,
     Icon? incrementIcon,
     Icon? decrementIcon,
@@ -241,6 +243,9 @@ class CupertinoSpinBox extends BaseSpinBox {
   /// See [CupertinoTextField.decoration].
   final BoxDecoration decoration;
 
+  /// See [FormField.validator].
+  final FormFieldValidator<String>? validator;
+
   /// See [CupertinoTextField.keyboardAppearance].
   final Brightness? keyboardAppearance;
 
@@ -287,6 +292,7 @@ class CupertinoSpinBoxState extends State<CupertinoSpinBox> with SpinBoxMixin {
         textAlign: widget.textAlign,
         keyboardType: widget.keyboardType,
         textInputAction: widget.textInputAction,
+        // validator: widget.validator,
         contextMenuBuilder: widget.contextMenuBuilder,
         keyboardAppearance: widget.keyboardAppearance,
         inputFormatters: [formatter],
@@ -349,20 +355,46 @@ class CupertinoSpinBoxState extends State<CupertinoSpinBox> with SpinBoxMixin {
     );
 
     if (isHorizontal) {
-      return Stack(
-        alignment: Alignment.center,
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          textField,
-          Center(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: decrementButton,
-            ),
+          Stack(
+            fit: StackFit.passthrough,
+            // clipBehavior: Clip.none,
+            alignment: Alignment.center,
+            children: [
+              textField,
+              Center(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: decrementButton,
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: incrementButton,
+              )
+            ],
           ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: incrementButton,
-          )
+          if (widget.validator != null)
+            ValueListenableBuilder(
+              valueListenable: controller,
+              builder: (context, textEditingValue, _) {
+                final errorValidationText =
+                    widget.validator?.call(textEditingValue.text);
+
+                return AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  child: errorValidationText == null
+                      ? const SizedBox.shrink()
+                      : Text(
+                          errorValidationText,
+                          style:
+                              const TextStyle(color: CupertinoColors.systemRed),
+                        ),
+                );
+              },
+            ),
         ],
       );
     } else {
