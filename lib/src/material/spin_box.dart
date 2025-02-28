@@ -49,7 +49,7 @@ import 'spin_button.dart';
 class SpinBox extends BaseSpinBox {
   /// Creates a spinbox.
   SpinBox({
-    Key? key,
+    super.key,
     this.min = 0,
     this.max = 100,
     this.step = 1,
@@ -96,8 +96,7 @@ class SpinBox extends BaseSpinBox {
             ),
         enabled = (enabled ?? true) && min < max,
         incrementIcon = incrementIcon ?? const Icon(Icons.add),
-        decrementIcon = decrementIcon ?? const Icon(Icons.remove),
-        super(key: key);
+        decrementIcon = decrementIcon ?? const Icon(Icons.remove);
 
   /// The minimum value the user can enter.
   ///
@@ -293,8 +292,6 @@ class SpinBoxState extends State<SpinBox> with SpinBoxMixin {
         return Colors.white70;
       case Brightness.light:
         return Colors.black45;
-      default:
-        return theme.iconTheme.color;
     }
   }
 

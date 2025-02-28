@@ -5,8 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'test_spinbox.dart';
 
 class TestApp extends MaterialApp {
-  TestApp({Key? key, required Widget widget})
-      : super(key: key, home: Scaffold(body: widget));
+  TestApp({super.key, required Widget widget})
+      : super(home: Scaffold(body: widget));
 }
 
 void main() {

@@ -103,10 +103,10 @@ class SpinBoxTheme extends InheritedWidget {
   /// Constructs a checkbox theme that configures all descendant [SpinBox]
   /// widgets.
   const SpinBoxTheme({
-    Key? key,
+    super.key,
     required this.data,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required super.child,
+  });
 
   /// The properties used for all descendant [SpinBox] widgets.
   final SpinBoxThemeData data;
